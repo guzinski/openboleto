@@ -11,21 +11,26 @@ use OpenBoleto\Banco\Caixa;
 $sacado = new Agente('Luciano Guzinski', '024.232.580-43', 'Rua Abaeté, 52', '91130-490', 'Porto Alegre', 'RS');
 $cedente = new Agente('CGE CENTRAL GAUCHA DE ESTAGIOS', '23.678.359/0001-18', 'Assis Brasil 3535 8º Andar, Sala 814 ', '91010-007', 'Porto Alegre', 'RS');
 
+
+$vencimento = new DateTime('2017-04-28');
+$valor = 1.25;
+$nossoNumero = 302;
+
+
 $boleto = new Caixa(array(
     // Parâmetros obrigatórios
-    'dataVencimento' => new DateTime('2017-05-10'),
-    'valor' => 2.00,
-    'sequencial' => 301,
+    'dataVencimento' => $vencimento,
+    'valor' => $valor,
+    'sequencial' => $nossoNumero,
+    'numeroDocumento' => $nossoNumero,
     'sacado' => $sacado,
     'cedente' => $cedente,
     'agencia' => '0451', // Até 4 dígitos
     'carteira' => 'RG', // SR => Sem Registro ou RG => Registrada
-    'conta' => '33526', // Até 6 dígitos
+    'conta' => '678000', // Até 6 dígitos
     'convenio' => '678000', // 4, 6 ou 7 dígitos
-    // Parâmetros recomendáveis
-    //'logoPath' => 'http://empresa.com.br/logo.jpg', // Logo da sua empresa
-    'contaDv' => 9,
-//    'agenciaDv' => 1,
+    'contaDv' => 8,
+    'agenciaDv' => 0,
     'descricaoDemonstrativo' => array(// Até 5
         'Boleto de Testes',
     ),
@@ -45,7 +50,6 @@ $boleto = new Caixa(array(
     //'pagamentoMinimo' => 23.00,
     //'aceite' => 'N',
     'especieDoc' => 'FAT',
-    'numeroDocumento' => '301',
         //'usoBanco' => 'Uso banco',
         //'layout' => 'caixa.phtml',
         //'logoPath' => 'http://boletophp.com.br/img/opensource-55x48-t.png',
@@ -88,10 +92,10 @@ $arquivo->insertDetalhe(array(
     'aceite' => 'N',
     'registrado' => 1,
     'codigo_ocorrencia' => 1, // 1 = Entrada de título, futuramente poderemos ter uma constante
-    'nosso_numero' => 301,
-    'numero_documento' => 301,
+    'nosso_numero' => 14000000000000000 + $nossoNumero,
+    'numero_documento' => $nossoNumero,
     'especie' => Especie::CEF_DUPLICATA_DE_PRESTACAO_DE_SERVICOS, // Você pode consultar as especies Cnab\Especie
-    'valor' => 2.00, // Valor do boleto
+    'valor' => $valor, // Valor do boleto
     'instrucao1' => 0,
     'instrucao2' => 0,
     'sacado_nome' => $sacado->getNome(),
@@ -102,7 +106,7 @@ $arquivo->insertDetalhe(array(
     'sacado_cep' => "91130-490", // sem hífem
     'sacado_cidade' => "Porto Alegre",
     'sacado_uf' => "RS",
-    'data_vencimento' => $boleto->getDataVencimento(),
+    'data_vencimento' => $vencimento,
     'data_cadastro' => new DateTime("now"),
     'prazo' => 0, // prazo de dias para o cliente pagar após o vencimento
     'taxa_de_permanencia' => '0',
