@@ -13,9 +13,9 @@ $cedente = new Agente('CGE CENTRAL GAUCHA DE ESTAGIOS', '23.678.359/0001-18', 'A
 
 
 $vencimento = new DateTime('2017-04-28');
-$valor = 1.25;
-$nossoNumero = 302;
-
+$valor = 1.37;
+$nossoNumero = 303;
+$numeroSequencialArquivo = 2;
 
 $boleto = new Caixa(array(
     // Parâmetros obrigatórios
@@ -64,7 +64,7 @@ $boleto = new Caixa(array(
         ));
 
 $codigo_banco = Banco::CEF;
-$arquivo = new Arquivo($codigo_banco, $layoutVersao = 'sigcb');
+$arquivo = new Arquivo($codigo_banco, 'sigcb');
 $arquivo->configure(array(
     'data_geracao' => new DateTime(),
     'data_gravacao' => new DateTime(),
@@ -84,23 +84,23 @@ $arquivo->configure(array(
     'conta_dac' => '9', // digito da conta
     'codigo_cedente' => '678000',
     'operacao' => '003',
-    'numero_sequencial_arquivo' => 1,
+    'numero_sequencial_arquivo' => $numeroSequencialArquivo,
 ));
 
 $arquivo->insertDetalhe(array(
     'modalidade_carteira' => '14', //14 (título Registrado emissão Beneficiário)
     'aceite' => 'N',
-    'registrado' => 1,
+    'registrado' => TRUE,
     'codigo_ocorrencia' => 1, // 1 = Entrada de título, futuramente poderemos ter uma constante
-    'nosso_numero' => 14000000000000000 + $nossoNumero,
+    'nosso_numero' => $nossoNumero,
     'numero_documento' => $nossoNumero,
     'especie' => Especie::CEF_DUPLICATA_DE_PRESTACAO_DE_SERVICOS, // Você pode consultar as especies Cnab\Especie
     'valor' => $valor, // Valor do boleto
     'instrucao1' => 0,
     'instrucao2' => 0,
-    'sacado_nome' => $sacado->getNome(),
+    'sacado_nome' => "Luciano Guzinski",
     'sacado_tipo' => 'cpf', //campo fixo, escreva 'cpf' (sim as letras cpf)
-    'sacado_cpf' => $sacado->getDocumento(),
+    'sacado_cpf' => "024.232.850-43",
     'sacado_logradouro' => "Rua Abaeté 52",
     'sacado_bairro' => "Sarandi",
     'sacado_cep' => "91130-490", // sem hífem
@@ -114,7 +114,9 @@ $arquivo->insertDetalhe(array(
     'valor_desconto' => 0,
     'valor_multa' => 0,
     'mensagem' => ' ',
-    'identificacao_distribuicao' => 0
+    'identificacao_distribuicao' => 0,
+    'codigo_protesto' => 3,
+    'baixar_apos_dias' => 999,
 ));
 
 
