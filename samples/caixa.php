@@ -116,6 +116,7 @@ $arquivo->insertDetalhe(array(
     'mensagem' => ' ',
     'identificacao_distribuicao' => 0,
     'codigo_protesto' => 3,
+//    'prazo_protesto' => 90,
     'baixar_apos_dias' => 999,
 ));
 
